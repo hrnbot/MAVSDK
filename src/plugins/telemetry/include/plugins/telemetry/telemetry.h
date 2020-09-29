@@ -32,12 +32,25 @@ public:
      * The plugin is typically created as shown below:
      *
      *     ```cpp
-     *     auto telemetry = std::make_shared<Telemetry>(system);
+     *     auto telemetry = Telemetry(system);
      *     ```
      *
      * @param system The specific system associated with this plugin.
      */
-    explicit Telemetry(System& system);
+    explicit Telemetry(System& system); // deprecated
+
+    /**
+     * @brief Constructor. Creates the plugin for a specific System.
+     *
+     * The plugin is typically created as shown below:
+     *
+     *     ```cpp
+     *     auto telemetry = Telemetry(system);
+     *     ```
+     *
+     * @param system The specific system associated with this plugin.
+     */
+    explicit Telemetry(std::shared_ptr<System> system); // new
 
     /**
      * @brief Destructor (internal use only).
@@ -1570,9 +1583,9 @@ public:
     Result set_rate_unix_epoch_time(double rate_hz) const;
 
     /**
-     * @brief Copy constructor (object is not copyable).
+     * @brief Copy constructor.
      */
-    Telemetry(const Telemetry&) = delete;
+    Telemetry(const Telemetry& other);
 
     /**
      * @brief Equality operator (object is not copyable).
